@@ -2,9 +2,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 6px 95px 5px 0;
+    margin: auto;
 }
-
+/* 6px 95px 5px 0 */
 .BuildControl button {
     display: block;
     font: inherit;
