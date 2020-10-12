@@ -8,26 +8,57 @@ import Input from '../../../Components/UI/Input/Input';
 
 class ContactOrder extends Component {
     state= {
-        name: '',
-        email: '',
-        adress: '',
-        loading: false
+    orderForm: {
+            name: {
+                elementType: 'input',
+                elementConfig:{
+                    type: 'text',
+                    placeholder: 'Your Name'
+                },
+                value:''
+            },
+            adress: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your Adress'
+                },
+                value: ''
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'email',
+                    placeholder: 'Your Email'
+                },
+                value: ''
+            },
+            delivery: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [
+                        {value: 'fastest', displayValue: 'Fastest'},
+                        {value: 'cheapest', displayValue: 'Cheapest'}
+                    ]
+                },
+                value: ''
+            },
+        },
+    loading: false
     }
 
     orderHandler = (event) => {
         event.preventDefault();
-        this.setState({loading: true})
+        this.setState({loading: true});
+        const formData= {};
+        for (let formElementId in this.state.orderForm) {
+            formData[formElementId] = this.state.orderForm[formElementId].value;
+        }
         const order = {
             price: this.props.price,
             ingredients: this.props.ingredients,
-            customer: {
-                name: 'boulbou',
-                adress: 'chinatown',
-                country: 'france',
-                email: 'boul@boul.com'
-            },
-            delivery: 'pigeon voyageur'
-        }
+            orderData: formData
+                }
         axios.post('/orders.json', order).then(
             res => {this.setState({loading: false});
                     this.props.history.push('/')}
@@ -36,13 +67,38 @@ class ContactOrder extends Component {
         );
     }
 
+    inputChangedHandler = (event, inputId) => {
+        const updatedOrderForm = {
+            ...this.state.orderForm
+        };
+        const updatedFormElement = {
+            ...updatedOrderForm[inputId]
+        };
+        updatedFormElement.value = event.target.value;
+        updatedOrderForm[inputId] = updatedFormElement;
+        this.setState({orderForm: updatedOrderForm});
+    }
+
     render() {
+        const formElementsArray = [];
+        for (let key in this.state.orderForm) {
+            formElementsArray.push({
+                id: key,
+                config: this.state.orderForm[key]
+            });
+        }
         let form = (
-            <form>
-                <Input inputtype='input' type='text' name='name' placeholder='Your Name' />
-                <Input inputtype='input' type='text' name='email' placeholder='Your Email' />
-                <Input inputtype='input' type='text' name='adress' placeholder='Your Adress' />
-                <Button btnType='Success' clicked={this.orderHandler}>Confirm the order</Button>
+            <form onSubmit={this.orderHandler}>
+                {formElementsArray.map( formElement => (
+                        <Input 
+                            key={formElement.id}
+                            elementType={formElement.config.elementType} 
+                            elementConfig={formElement.config.elementConfig}
+                            value={formElement.config.value}
+                            changed={(event) => this.inputChangedHandler(event, formElement.id)} />
+                )
+                )}
+                <Button btnType='Success' >Confirm the order</Button>
             </form>);
         if(this.state.loading) {
             form = <Spinner/>
