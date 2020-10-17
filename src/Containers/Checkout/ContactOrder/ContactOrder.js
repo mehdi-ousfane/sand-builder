@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
 import Button from '../../../Components/UI/Button/Button';
 import classes from './ContactOrder.module.css';
@@ -146,5 +147,11 @@ class ContactOrder extends Component {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+        ingredients: state.ingredients,
+        price: state.totalPrice
+    };
+};
 
-export default ContactOrder;
+export default connect(mapStateToProps)(ContactOrder);
