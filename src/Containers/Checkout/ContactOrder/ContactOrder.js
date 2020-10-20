@@ -69,7 +69,6 @@ class ContactOrder extends Component {
 
     orderHandler = (event) => {
         event.preventDefault();
-        this.setState({loading: true});
         const formData= {};
         for (let formElementId in this.state.orderForm) {
             formData[formElementId] = this.state.orderForm[formElementId].value;
@@ -79,12 +78,7 @@ class ContactOrder extends Component {
             ingredients: this.props.ingredients,
             orderData: formData
                 }
-        axios.post('/orders.json', order).then(
-            res => {this.setState({loading: false});
-                    this.props.history.push('/')}
-        ).catch(
-            e => {this.setState({loading: false});}
-        );
+        
     }
     checkValid(value, rules) {
         let isValid = true;
