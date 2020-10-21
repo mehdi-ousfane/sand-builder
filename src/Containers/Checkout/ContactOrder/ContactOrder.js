@@ -6,6 +6,8 @@ import classes from './ContactOrder.module.css';
 import axios from '../../../axios-orders';
 import Spinner from '../../../Components/UI/Spinner/Spinner';
 import Input from '../../../Components/UI/Input/Input';
+import withErrorHandler from '../../../HOC/withErrorHandler/withErrorHandler';
+import * as actions from '../../../store/actions/index';
 
 class ContactOrder extends Component {
     state= {
@@ -78,6 +80,8 @@ class ContactOrder extends Component {
             ingredients: this.props.ingredients,
             orderData: formData
                 }
+
+        this.props.onOrderBurger(order);
         
     }
     checkValid(value, rules) {
@@ -148,4 +152,10 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(ContactOrder);
+const mapDispatchToProps = dispatch => {
+    return {
+        onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactOrder, axios));
