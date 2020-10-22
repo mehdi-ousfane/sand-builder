@@ -59,13 +59,12 @@ class ContactOrder extends Component {
                         {value: 'cheapest', displayValue: 'Cheapest'}
                     ]
                 },
-                value: '',
+                value: 'fastest',
                 validation: {},
                 valid: true
             },
         },
-    formIsValid: false,
-    loading: false
+    formIsValid: false
     }
 
 
@@ -134,7 +133,7 @@ class ContactOrder extends Component {
                 )}
                 <Button btnType='Success' disabled={!this.state.formIsValid}>Confirm the order</Button>
             </form>);
-        if(this.state.loading) {
+        if(this.props.loading) {
             form = <Spinner/>
         }
         return(
@@ -147,8 +146,9 @@ class ContactOrder extends Component {
 }
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients,
-        price: state.totalPrice
+        ingredients: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        loading: state.order.loading
     };
 };
 
