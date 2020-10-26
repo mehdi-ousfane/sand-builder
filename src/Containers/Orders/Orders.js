@@ -17,7 +17,7 @@ class Orders extends Component {
         if (!this.props.loading) {
             orders = 
             (<div>
-                {this.props.order.map(order => <Order 
+                {this.props.orders.map(order => <Order 
                 key={order.id}
                 ingredients={order.ingredients}
                 price={+order.price} />)}

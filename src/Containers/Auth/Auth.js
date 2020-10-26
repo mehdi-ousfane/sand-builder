@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import Input from '../../Components/UI/Input/Input';
 import Button from '../../Components/UI/Button/Button';
+import classes from './Auth.module.css';
 
 class Auth extends Component {
     state = {
@@ -14,8 +15,7 @@ class Auth extends Component {
                 },
                 value:'',
                 validation: {
-                    required: true,
-                    isEmail: true
+                    required: true
                 },
                 valid: false,
                 touched: false
@@ -35,6 +35,20 @@ class Auth extends Component {
             }
         }
     };
+
+    checkValid = (value, rules) => {
+        let isValid = true;
+        if (!rules) {
+            return true;
+        }
+        if (rules.required) {
+            isValid = value.trim() !== '' & isValid;
+        }
+        if (rules.minLength) {
+            isValid = value.length >= rules.minLength & isValid;
+        }
+        return isValid;
+    }
 
     render () {
         const formElementsArray = [];
@@ -58,9 +72,10 @@ class Auth extends Component {
         ));
 
         return (
-            <div>
+            <div className={classes.Auth}>
                 <form>
-
+                    {form}
+                <Button btnType='Success'>SUBMIT</Button>
                 </form>
             </div>
         );
