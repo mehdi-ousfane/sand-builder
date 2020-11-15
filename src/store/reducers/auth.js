@@ -30,6 +30,10 @@ const reducer = (state=initialState, action) => {
                 token: null,
                 userId: null
             });
+        case actionTypes.SET_AUTH_REDIRECT_PATH :
+            return upObject(state, {
+                authRedirectPath: action.path
+            });
         default :
             return state;
     }
