@@ -4,11 +4,6 @@ import Aux from '../../../HOC/Aux';
 import Button from '../../UI/Button/Button';
 
 class OrderSummary extends Component {
-
-    componentWillUpdate() {
-        console.log('OrderSummary has been up');
-    };
-
     render() {
         const ingrSummary = Object.keys(this.props.ingredients).map(ingrKey=>{
             return <li key={ingrKey}><span style={{textTransform: 'capitalize'}}>{ingrKey}</span>: {this.props.ingredients[ingrKey]}</li>
