@@ -1,5 +1,4 @@
 import * as actionTypes from './actionTypes';
-import axios from '../../axios-orders';
 
 export const addIngredient = (name) => {
     return {
@@ -23,11 +22,7 @@ export const setIngredients = (ingredients) => {
 };
 
 export const initIngredients = () => {
-    return dispatch => {
-        axios.get('https://sand-builder.firebaseio.com/ingredients.json').then(
-            res => {dispatch(setIngredients(res.data))}
-        ).catch(
-            e => {}
-        )
-    };
-}; 
+    return {
+        type: actionTypes.INIT_INGREDIENTS
+    }
+};
