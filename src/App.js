@@ -11,10 +11,11 @@ import LogOut from './Containers/Auth/LogOut/LogOut';
 import * as actions from './store/actions/index';
 
 const App = props => {
+    const {onCheckAuthState} = props;
 
     useEffect(() => {
-        props.onCheckAuthState();
-    }, []);
+        onCheckAuthState();
+    }, [onCheckAuthState]);
 
     let routes = (
       <Switch>
