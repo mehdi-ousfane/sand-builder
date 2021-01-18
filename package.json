@@ -1,7 +1,9 @@
 {
-  "name": "react-complete-guide",
+  "name": "sand-builder",
   "version": "0.1.0",
-  "private": true,
+  "engines": {
+    "node": "14.x"
+  },
   "dependencies": {
     "autoprefixer": "7.1.2",
     "axios": "^0.21.1",
